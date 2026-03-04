@@ -35,13 +35,37 @@ export default function RootLayout() {
   const [limparVisor, setLimparVisor] = React.useState(false);
 
   const tocarNumero = (valor) => {
-    if (limparVisor) {
-      setVisor(valor);
-      setLimparVisor(false);
+    if (valor ==="÷") {
+      valor = "/";
+    }
+
+    if (valor ==="X") {
+      valor = "*";
+    }
+
+    if ((valor === "+" || valor === "-" || valor === "*" || valor === "/") && 
+    (visor.charAt(visor.length - 1) === "+" || visor.charAt(visor.length - 1) === "-" || visor.charAt(visor.length - 1) === "*" || visor.charAt(visor.length - 1) === "/")) {
+      return;
     } else {
-      setVisor(visor === '0' ? valor : visor + valor);
+      if (limparVisor) {
+        setVisor(valor);
+       setLimparVisor(false);
+      } else {
+        setVisor(visor === '0' ? valor : visor + valor);
+      }
     }
   }
+
+  const limparTudo = () => {
+    setVisor('0');
+    setOperacao(null);
+    setValorAnterior(null);
+    setLimparVisor(false);
+  }
+
+  
+
+
 
   return (
     <SafeAreaView>
@@ -53,10 +77,10 @@ export default function RootLayout() {
 
       <View style={styles.container}>
         <View style={styles.line}>
-        <Botao texto="C" onPress={() => tocarNumero('limparVisor')} />
+        <Botao texto="C" onPress={limparTudo} />
         <Botao texto="()" onPress={() => tocarNumero('parentes')} />
         <Botao texto="%" onPress={() => tocarNumero('%')} />
-        <Botao texto="÷" onPress={() => tocarNumero('/')} />
+        <Botao texto="÷" onPress={() => tocarNumero('÷')} />
         </View>
 
          <View style={styles.line}>
