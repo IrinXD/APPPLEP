@@ -25,7 +25,6 @@ const Botao = ({ texto, onPress }) => {
   );
 };
 
-  
 
 
 export default function RootLayout() {
@@ -63,9 +62,41 @@ export default function RootLayout() {
     setLimparVisor(false);
   }
 
+  const calcular = () => {
+    try {
+      const resultado = new Function('return ' + visor)();
+      setVisor(resultado.toString());
+    } catch (error) {
+      setVisor('Erro');
+    }
+  }
+
+  const porcentagem = () => {
+    try {
+      const resultado = parseFloat(visor) / 100;
+      setVisor(resultado.toString());
+    } catch (error) {
+      setVisor('Erro');
+    }  
+  }
+
+  const inverterSinal = () => {
+    try {
+      const resultado = parseFloat(visor) * -1;
+      setVisor(resultado.toString());
+    } catch (error) {
+      setVisor('Erro');
+    }
+  }
+
+  const parenteses = () => {
+  if (visor.split('(').length > visor.split(')').length) {
+    tocarNumero(')');
+  } else {
+    tocarNumero('(');
+  }
+}
   
-
-
 
   return (
     <SafeAreaView>
@@ -78,8 +109,8 @@ export default function RootLayout() {
       <View style={styles.container}>
         <View style={styles.line}>
         <Botao texto="C" onPress={limparTudo} />
-        <Botao texto="()" onPress={() => tocarNumero('parentes')} />
-        <Botao texto="%" onPress={() => tocarNumero('%')} />
+        <Botao texto="()" onPress={parenteses} />
+        <Botao texto="%" onPress={porcentagem} />
         <Botao texto="÷" onPress={() => tocarNumero('÷')} />
         </View>
 
@@ -105,10 +136,10 @@ export default function RootLayout() {
         </View>
 
         <View style={styles.line}>
-          <Botao texto="+/-" onPress={() => tocarNumero('pet')} />
+          <Botao texto="+/-" onPress={inverterSinal} />
           <Botao texto="0" onPress={() => tocarNumero('0')} />
           <Botao texto="," onPress={() => tocarNumero('.')} />
-          <Botao texto="=" onPress={() => tocarNumero('=')} />
+          <Botao texto="=" onPress={calcular} />
         </View>
 
       </View>
