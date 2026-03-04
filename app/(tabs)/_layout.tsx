@@ -29,18 +29,31 @@ const Botao = ({ texto, onPress }) => {
 
 
 export default function RootLayout() {
+  const [visor, setVisor] = React.useState('0');
+  const [operacao, setOperacao] = React.useState(null);
+  const [valorAnterior, setValorAnterior] = React.useState(null);
+  const [limparVisor, setLimparVisor] = React.useState(false);
+
+  const tocarNumero = (valor) => {
+    if (limparVisor) {
+      setVisor(valor);
+      setLimparVisor(false);
+    } else {
+      setVisor(visor === '0' ? valor : visor + valor);
+    }
+  }
 
   return (
     <SafeAreaView>
 
       
       <View style={styles.view}>
-          <Text style={styles.visorText}>0</Text>
+          <Text style={styles.visorText}>{visor}</Text>
       </View>
 
       <View style={styles.container}>
         <View style={styles.line}>
-        <Botao texto="C" onPress={() => tocarNumero('Apagar')} />
+        <Botao texto="C" onPress={() => tocarNumero('limparVisor')} />
         <Botao texto="()" onPress={() => tocarNumero('parentes')} />
         <Botao texto="%" onPress={() => tocarNumero('%')} />
         <Botao texto="÷" onPress={() => tocarNumero('/')} />
