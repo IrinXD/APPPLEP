@@ -2,11 +2,28 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const Botao = ({texto, onPress}) => (
-    <TouchableOpacity style={styles.button}>
-      <Text>{texto}</Text>
+const Botao = ({ texto, onPress }) => {
+
+  let estiloBotao = styles.button;
+
+  if (texto === '+' || texto === '-' || texto === 'X' || texto === '÷') {
+    estiloBotao = [styles.button, styles.operador];
+  }
+
+  if (texto === 'C' || texto === '()' || texto === '%') {
+    estiloBotao = [styles.button, styles.cinzaclaro];
+  }
+
+  if (texto === '=') {
+    estiloBotao = [styles.button, styles.igual];
+  }
+
+  return (
+    <TouchableOpacity style={estiloBotao} onPress={onPress}>
+      <Text style={styles.buttonText}>{texto}</Text>
     </TouchableOpacity>
   );
+};
 
   
 
@@ -17,8 +34,8 @@ export default function RootLayout() {
     <SafeAreaView>
 
       
-      <View>
-          <Text>Valor na tela</Text>
+      <View style={styles.view}>
+          <Text style={styles.visorText}>0</Text>
       </View>
 
       <View style={styles.container}>
@@ -51,10 +68,10 @@ export default function RootLayout() {
         </View>
 
         <View style={styles.line}>
+          <Botao texto="+/-" onPress={() => tocarNumero('pet')} />
           <Botao texto="0" onPress={() => tocarNumero('0')} />
           <Botao texto="," onPress={() => tocarNumero('.')} />
           <Botao texto="=" onPress={() => tocarNumero('=')} />
-          <Botao texto="+/-" onPress={() => tocarNumero('pet')} />
         </View>
 
       </View>
@@ -74,6 +91,17 @@ const styles = StyleSheet.create({
     
   },
 
+  buttonText: {
+    color: '#fff',
+    fontSize: 24,
+    fontWeight: 'bold' 
+  },
+
+  visorText: {
+    color: '#fff',
+    fontSize: 48,
+  },
+
   button: {
     backgroundColor: '#333',
     width: 90,
@@ -87,6 +115,25 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 10
+  },
+
+  view: {
+    height: 150,
+    justifyContent: 'center',
+   alignItems: 'flex-end',
+    padding: 20,
+  },
+
+  operador: {
+    backgroundColor: '#a5a5a5'
+  },
+
+  cinzaclaro: {
+    backgroundColor: '#505050'
+  },
+
+  igual: {
+    backgroundColor: '#34c759'
   }
 
 
