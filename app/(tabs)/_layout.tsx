@@ -80,10 +80,10 @@ export default function RootLayout() {
     }  
   }
 
-  const inverterSinal = () => {
+  const raizQuadrada = () => {
     try {
-      const resultado = parseFloat(visor) * -1;
-      setVisor(resultado.toString());
+      const resultado = Math.sqrt(parseFloat(visor));
+      setVisor(resultado.toFixed(2).toString());
     } catch (error) {
       setVisor('Erro');
     }
@@ -103,7 +103,7 @@ export default function RootLayout() {
 
       
       <View style={styles.view}>
-          <Text style={styles.visorText}>{visor}</Text>
+          <Text style={styles.visorText}>{visor.split('.').join(',').split('*').join('×').split('/').join('÷')}</Text>
       </View>
 
       <View style={styles.container}>
@@ -136,7 +136,7 @@ export default function RootLayout() {
         </View>
 
         <View style={styles.line}>
-          <Botao texto="+/-" onPress={inverterSinal} />
+          <Botao texto="√" onPress={raizQuadrada} />
           <Botao texto="0" onPress={() => tocarNumero('0')} />
           <Botao texto="," onPress={() => tocarNumero('.')} />
           <Botao texto="=" onPress={calcular} />
